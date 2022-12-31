@@ -1,12 +1,29 @@
-import java.io.*;
-import java.util.*;
+class Solution {
 
-public class hello{
+    public int evalRPN(String[] tokens) {
+        
+        Stack<Integer> stack = new Stack<>();
 
-    public static void main(String[] args) throws IOException{
+        for(String token: tokens){
 
-       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       System.out.println("hi");
-       br.close();
+            try{
+
+                Integer val = Integer.valueOf(token);
+                stack.push(val);
+            }
+            catch(NumberFormatException ex){
+
+                Integer b = stack.pop(), a = stack.pop();
+                Integer cal;
+
+                if(token.equals("+")) cal = a + b;
+                else if(token.equals("-")) cal = a - b;
+                else if(token.equals("*")) cal = a * b;
+                else cal = a / b; 
+
+                stack.push(cal);
+            }
+        }
+        return stack.pop();
     }
 }
